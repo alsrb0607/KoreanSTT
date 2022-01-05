@@ -1,0 +1,28 @@
+모든 코드는 'KoreanSTT_kospeech' 폴더에서 실행되어야 합니다.
+또한 필자의 경우 audio path에 경로 입력 시 상대 경로를 이용하면 간혹 문제가 생겨,
+train wav 폴더, test wav 폴더, metadata 폴더를 각각 'KoreanSTT_kospeech' 동일한 레벨에 둔 뒤 절대 경로로 입력해주었습니다.
+
+사용 형식 및 예시는 아래와 같습니다. 
+
+[train] 
+형식) python ./bin/main.py model=ds2 train=ds2_train train.dataset_path=$dataset_path
+예시) python ./bin/main.py model=ds2 train=ds2_train train.dataset_path="D:\code\train wav"
+
+[preprocessing]
+형식) python main.py --dataset_path $dataset_path --vocab_dest $vacab_dict_destination --output_unit 'character' --preprocess_mode 'phonetic' 
+예시) python main.py --dataset_path "D:\code\train wav" --vocab_dest "D:\code" --output_unit 'character' --preprocess_mode 'phonetic'
+python main.py --dataset_path "D:\code\train wav" --vocab_dest "D:\kospeech-latest" --output_unit "character" --preprocess_mode 'phonetic'
+
+[inference] -> device(default='cpu')는 optional
+형식) python ./bin/inference.py --model_path $model_path --audio_path $audio_path --device "cpu"
+예시) python ./bin/inference.py --model_path "G:/내 드라이브/code/kospeech-latest/outputs/2021-12-10/09-00-20/model.pt" --audio_path "../test wav/CN11RC002_CN0031_20210726.wav" --device "cpu"
+
+[inference_wer] -> dst_path(default='./outputs')와 device(default='cpu')는 optional
+형식) python ./bin/inference_wer.py --model_path $model_path --audio_path $audio_path --transcript_path $transcript_path --dst_path $result_destination --device "cpu"
+예시) python ./bin/inference_wer.py --model_path "G:/내 드라이브/code/kospeech-latest/outputs/2021-12-10/09-00-20/model.pt" --audio_path "D:/code/sample1/audio" --transcript_path "D:/code/sample1/transcripts.txt" --dst_path "D:/code/sample1" --device "cpu"
+
+[prediction] -> submission을 False로 지정하면 excel 파일은 생성하지 않고 .txt 파일에 결과 저장, device(default='cpu')는 optional
+형식) python ./bin/prediction.py --model_path $model_path --audio_path $audio_path --submission 'True' --device "cpu"
+예시) python ./bin/prediction.py --model_path "G:\내 드라이브\code\kospeech-latest\outputs\2021-12-10\19-51-14/model.pt" --audio_path "D:/code/test wav" --submission 'True' --device "cpu"
+
+python ./bin/prediction.py --model_path "./outputs/model.pt" --audio_path "D:/code/test wav" --submission 'True' --device "cpu"
