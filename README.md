@@ -89,5 +89,5 @@ python ./bin/prediction.py --model_path $model_path --audio_path $audio_path --s
 ## - References
 - Wer, Cer 관련: 
 https://holianh.github.io/portfolio/Cach-tinh-WER/
-
-
+- kospeech:
+https://github.com/sooftware/kospeech
